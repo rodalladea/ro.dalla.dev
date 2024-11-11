@@ -26,20 +26,20 @@ export default function Component() {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             switch (event.key) {
-                case 'j':
-                    setSelectedIndex((prevIndex) => (prevIndex + 1) % files.length)
-                    setCursorPosition(0)
-                    break
-                case 'k':
-                    setSelectedIndex((prevIndex) => (prevIndex - 1 + files.length) % files.length)
-                    setCursorPosition(0)
-                    break
-                case 'h':
-                    moveCursor('left')
-                    break
-                case 'l':
-                    moveCursor('right')
-                    break
+            case 'j':
+                setSelectedIndex((prevIndex) => (prevIndex + 1) % files.length)
+                setCursorPosition(0)
+                break
+            case 'k':
+                setSelectedIndex((prevIndex) => (prevIndex - 1 + files.length) % files.length)
+                setCursorPosition(0)
+                break
+            case 'h':
+                moveCursor('left')
+                break
+            case 'l':
+                moveCursor('right')
+                break
             }
         }
 

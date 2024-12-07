@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/Footer";
+import { CursorProvider } from "@/context/Cursor";
 
 const jetBrains = JetBrains_Mono({ subsets: ["latin"] });
 
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
     },
 };
 
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -21,7 +24,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${jetBrains.className} antialiased`}>
-                {children}
+                <CursorProvider>
+                    {children}
+                </CursorProvider>
+                <Footer />
             </body>
         </html>
     );

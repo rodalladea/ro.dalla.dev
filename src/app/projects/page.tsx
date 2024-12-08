@@ -4,7 +4,7 @@ import Content from "@/components/Content";
 import { useCursor } from "@/hooks/useCursor";
 import { useEffect } from "react";
 
-export default function about() {
+export default function Projects() {
     const { setContents } = useCursor()
 
     useEffect(() => {

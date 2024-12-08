@@ -47,7 +47,7 @@ export const CursorProvider: React.FC<CursorProviderProps> = ({ children }) => {
     }, [pathname])
 
     useEffect(() => {
-        let keysPressed: string[] = []
+        const keysPressed: string[] = []
 
         const handleKeyDown = (event: KeyboardEvent) => {
             keysPressed.push(event.key.toLowerCase())
@@ -61,39 +61,39 @@ export const CursorProvider: React.FC<CursorProviderProps> = ({ children }) => {
             }
 
             switch (event.key) {
-                case "j":
-                    setSelectedIndex((prevIndex) => (prevIndex + 1) >= contents.length ? prevIndex : prevIndex + 1)
+            case "j":
+                setSelectedIndex((prevIndex) => (prevIndex + 1) >= contents.length ? prevIndex : prevIndex + 1)
 
-                    const nextContent = contents[(selectedIndex + 1) >= contents.length ? selectedIndex : selectedIndex + 1]
-                    if (nextContent) {
-                        setCursorPosition(
-                            (prevPos) => prevPos > (nextContent.line.length - 1) ?
-                                nextContent.line.length - 1 :
-                                prevPos
-                        )
-                    }
-                    break
-                case "k":
-                    setSelectedIndex((prevIndex) => (prevIndex - 1) < 0 ? prevIndex : prevIndex - 1)
+                const nextContent = contents[(selectedIndex + 1) >= contents.length ? selectedIndex : selectedIndex + 1]
+                if (nextContent) {
+                    setCursorPosition(
+                        (prevPos) => prevPos > (nextContent.line.length - 1) ?
+                            nextContent.line.length - 1 :
+                            prevPos
+                    )
+                }
+                break
+            case "k":
+                setSelectedIndex((prevIndex) => (prevIndex - 1) < 0 ? prevIndex : prevIndex - 1)
 
-                    const prevContent = contents[(selectedIndex - 1) < 0 ? selectedIndex : selectedIndex - 1]
-                    if (prevContent) {
-                        setCursorPosition(
-                            (prevPos) => prevPos > (prevContent.line.length - 1) ?
-                                prevContent.line.length - 1 :
-                                prevPos
-                        )
-                    }
-                    break
-                case "h":
-                    moveCursor("left")
-                    break
-                case "l":
-                    moveCursor("right")
-                    break
-                case "Enter":
-                    contents[selectedIndex]?.action?.()
-                    break
+                const prevContent = contents[(selectedIndex - 1) < 0 ? selectedIndex : selectedIndex - 1]
+                if (prevContent) {
+                    setCursorPosition(
+                        (prevPos) => prevPos > (prevContent.line.length - 1) ?
+                            prevContent.line.length - 1 :
+                            prevPos
+                    )
+                }
+                break
+            case "h":
+                moveCursor("left")
+                break
+            case "l":
+                moveCursor("right")
+                break
+            case "Enter":
+                contents[selectedIndex]?.action?.()
+                break
             }
         }
 

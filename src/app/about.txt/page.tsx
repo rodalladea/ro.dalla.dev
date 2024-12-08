@@ -5,7 +5,7 @@ import { useCursor } from "@/hooks/useCursor";
 import transformTextToContents from "@/utils/transformTextToContents";
 import { useEffect } from "react";
 
-export default function about() {
+export default function About() {
     const { setContents } = useCursor()
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import { CursorProvider } from "@/context/Cursor";
+import Header from "@/components/Header";
 
 const jetBrains = JetBrains_Mono({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             <body className={`${jetBrains.className} antialiased`}>
                 <CursorProvider>
                     <div className="min-h-screen bg-terminal-black text-terminal-text-primary text-xs sm:text-base font-medium p-0 m-0">
+                        <Header />
                         {children}
                         <Footer />
                     </div>

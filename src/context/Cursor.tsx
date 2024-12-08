@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import React, { createContext, useState, useEffect, useCallback, ReactNode } from "react"
 
 export interface IContent {
@@ -27,10 +28,11 @@ export const CursorProvider: React.FC<CursorProviderProps> = ({ children }) => {
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
     const [cursorPosition, setCursorPosition] = useState<number>(0)
     const [contents, setContents] = useState<IContent[]>([])
+    const pathname = usePathname()
 
     const moveCursor = useCallback((direction: "left" | "right") => {
         setCursorPosition((prev) => {
-            const currentFileName = contents[selectedIndex].line
+            const currentFileName = contents[selectedIndex]?.line ?? ""
             if (direction === "left") {
                 return Math.max(0, prev - 1)
             } else {
@@ -40,36 +42,58 @@ export const CursorProvider: React.FC<CursorProviderProps> = ({ children }) => {
     }, [selectedIndex, contents])
 
     useEffect(() => {
+        setSelectedIndex(0)
+        setCursorPosition(0)
+    }, [pathname])
+
+    useEffect(() => {
+        let keysPressed: string[] = []
+
         const handleKeyDown = (event: KeyboardEvent) => {
+            keysPressed.push(event.key.toLowerCase())
+
+            if (keysPressed.length > 3) {
+                keysPressed.shift()
+            }
+
+            if (keysPressed.join('') === ' pv') {
+                window.history.back()
+            }
+
             switch (event.key) {
-            case "j":
-                setSelectedIndex((prevIndex) => (prevIndex + 1) % contents.length)
+                case "j":
+                    setSelectedIndex((prevIndex) => (prevIndex + 1) >= contents.length ? prevIndex : prevIndex + 1)
 
-                const nextContent = contents[(selectedIndex + 1) % contents.length]
-                setCursorPosition(
-                    (prevPos) => prevPos > (nextContent.line.length - 1) ?
-                        nextContent.line.length - 1 :
-                        prevPos
-                )
-                break
-            case "k":
-                setSelectedIndex((prevIndex) => (prevIndex - 1 + contents.length) % contents.length)
+                    const nextContent = contents[(selectedIndex + 1) >= contents.length ? selectedIndex : selectedIndex + 1]
+                    if (nextContent) {
+                        setCursorPosition(
+                            (prevPos) => prevPos > (nextContent.line.length - 1) ?
+                                nextContent.line.length - 1 :
+                                prevPos
+                        )
+                    }
+                    break
+                case "k":
+                    setSelectedIndex((prevIndex) => (prevIndex - 1) < 0 ? prevIndex : prevIndex - 1)
 
-                const prevContent = contents[(selectedIndex - 1 + contents.length) % contents.length]
-                setCursorPosition(
-                    (prevPos) => prevPos > (prevContent.line.length - 1) ?
-                        prevContent.line.length - 1 :
-                        prevPos
-                )
-                break
-            case "h":
-                moveCursor("left")
-                break
-            case "l":
-                moveCursor("right")
-                break
-            case "Enter":
-                contents[selectedIndex].action?.()
+                    const prevContent = contents[(selectedIndex - 1) < 0 ? selectedIndex : selectedIndex - 1]
+                    if (prevContent) {
+                        setCursorPosition(
+                            (prevPos) => prevPos > (prevContent.line.length - 1) ?
+                                prevContent.line.length - 1 :
+                                prevPos
+                        )
+                    }
+                    break
+                case "h":
+                    moveCursor("left")
+                    break
+                case "l":
+                    moveCursor("right")
+                    break
+                case "Enter":
+                    contents[selectedIndex]?.action?.()
+                    break
             }
         }
 
@@ -78,7 +102,7 @@ export const CursorProvider: React.FC<CursorProviderProps> = ({ children }) => {
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
         }
-    }, [moveCursor, contents.length])
+    }, [moveCursor, contents, selectedIndex])
 
     const value: CursorContextType = {
         contents,

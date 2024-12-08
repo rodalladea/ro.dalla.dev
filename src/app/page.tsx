@@ -8,12 +8,13 @@ import { useRouter } from 'next/navigation'
 
 
 export default function Component() {
-    const { setContents, contents } = useCursor()
+    const { setContents } = useCursor()
     const router = useRouter()
 
     const mainMenu: IContent[] = [
-        { line: "about.txt", action: () => { router.push("about") } },
-        { line: "projects/" }
+        { line: "about.txt", action: () => { router.push("about.txt") } },
+        { line: "projects/", action: () => { router.push("projects") } },
+        { line: "social/", action: () => { router.push("social") } }
     ]
 
     const [borderWidth, setBorderWidth] = useState(40)
@@ -36,7 +37,7 @@ export default function Component() {
     const borderLine = "=".repeat(borderWidth)
 
     return (
-        <div className="min-h-screen bg-terminal-black text-terminal-text-primary text-xs sm:text-base font-medium p-0 m-0">
+        <>
             <div className="text-terminal-text-secondary mb-2">
                 <div>
                     <span className="mr-2">"</span>{borderLine}
@@ -64,17 +65,13 @@ export default function Component() {
                         <span className="text-terminal-text-pink">{"[enter]"}</span>:<span className="text-terminal-text-primary">enter the page</span>{' '}
                         <span className="text-terminal-text-pink">{"[space]pv"}</span>:<span className="text-terminal-text-primary">back to menu</span>{' '}
                     </div>
-                    <div>
-                        <span className="mr-2">"</span>
-                        <span className="text-terminal-black bg-terminal-text-red">It's not possible to enter the pages yet</span>
-                    </div>
                 </div>
                 <div>
                     <span className="mr-2">"</span>{borderLine}
                 </div>
             </div>
 
-            <Content content={contents} />
-        </div>
+            <Content />
+        </>
     )
 }

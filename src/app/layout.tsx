@@ -25,8 +25,10 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${jetBrains.className} antialiased`}>
                 <CursorProvider>
-                    {children}
-                    <Footer />
+                    <div className="min-h-screen bg-terminal-black text-terminal-text-primary text-xs sm:text-base font-medium p-0 m-0">
+                        {children}
+                        <Footer />
+                    </div>
                 </CursorProvider>
             </body>
         </html>

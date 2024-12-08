@@ -1,0 +1,21 @@
+I am a dedicated software engineer with a strong foundation in computer engineering and
+a passion for web development. My coding journey began during my studies in Computer Engineering,
+where I co-founded Unect Jr., an IT junior enterprise. Over two and a half years,
+I honed my skills by developing various projects, primarily using Java, while independently
+studying JavaScript, HTML, and CSS.
+ 
+Upon completing my degree, I pursued a six-month English language program in Australia in 2019.
+After returning to Brazil, I joined Bluelab as a Software Engineer, where I have been
+developing integrations with voice bots and chatbots. Bluelab specializes in
+automated customer service solutions, offering advanced chatbot and voicebot technologies to
+enhance customer interactions across multiple channels. 
+ 
+I am now channeling my expertise into personal projects, including the development of my portfolio.
+My technical proficiency encompasses ReactJS and Node.js, and I maintain an active presence on GitHub
+under the username "rodalladea", where I share my projects and repositories. Notably,
+I created "ro.dalla.dev," a personal portfolio designed to emulate the aesthetics and functionality
+of NeoVim and TMUX, providing a terminal-inspired user experience. This portfolio is built using Next.js,
+React, and Tailwind CSS.
+ 
+Through my academic background, professional experience, and personal initiatives, I continue to
+advance my skills and contribute to the field of software development.

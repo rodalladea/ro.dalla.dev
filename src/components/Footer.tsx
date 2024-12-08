@@ -1,9 +1,13 @@
 "use client"
 
+import { useCursor } from "@/hooks/useCursor"
 import tmuxDisplayDate from "@/utils/tmuxDisplayDate"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function Footer() {
+    const { contents, selectedIndex, cursorPosition } = useCursor()
+
     const [displayDate, setDisplayDate] = useState(tmuxDisplayDate(new Date()))
     useEffect(() => {
         const displayDateInterval = setInterval(() => {
@@ -14,15 +18,19 @@ export default function Footer() {
         return () => clearInterval(displayDateInterval);
     }, [])
 
+    const pathname = usePathname()
+
     return <div className="flex flex-col fixed bottom-0 left-0 right-0 bg-terminal-black text-terminal-text-primary text-xs sm:text-base font-medium p-0 m-0">
         <div className="bg-terminal-highlight">
             <span className="bg-terminal-text-pink text-terminal-black px-2 inline-block font-extrabold">NORMAL</span>
             <span className="text-terminal-text-pink px-2 bg-terminal-highlight-high">master | ~25 -1</span>
-            <span className="px-2">src/app [-]</span>
+            <span className="px-2">src/app{pathname === "/" ? "" : pathname} [-]</span>
             <span className="float-right">
                 <span className="px-2">netrw</span>
-                <span className="text-terminal-text-pink px-2 bg-terminal-highlight-high">14%</span>
-                <span className="bg-terminal-text-pink text-terminal-black px-2 inline-block font-extrabold">19:97</span>
+                <span className="inline-block text-terminal-text-pink px-2 bg-terminal-highlight-high w-14 text-center">
+                    {contents.length ? `${Math.floor(((selectedIndex + 1) / contents.length) * 100)}%` : "nil"}
+                </span>
+                <span className="bg-terminal-text-pink text-terminal-black px-2 inline-block font-extrabold">{selectedIndex + 1}:{cursorPosition + 1}</span>
             </span>
         </div>
 
